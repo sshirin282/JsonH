@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class RecyclerAdapter(val context: Context, val  list:ArrayList<DataModel>)
     :RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
@@ -26,7 +27,10 @@ class RecyclerAdapter(val context: Context, val  list:ArrayList<DataModel>)
 
     override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
         val dataModel = list.get(position)
-
+        Glide.with(context)
+            .load(dataModel.image)
+            .into(holder.image1)
+//
     }
 
     override fun getItemCount(): Int {

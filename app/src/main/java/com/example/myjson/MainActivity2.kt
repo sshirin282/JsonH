@@ -3,6 +3,7 @@ package com.example.myjson
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -19,9 +20,11 @@ class MainActivity2 : AppCompatActivity() {
     lateinit var list:ArrayList<DataModel>
     var url:String="https://simplifiedcoding.net/demos/view-flipper/heroes.php"
     override fun onCreate(savedInstanceState: Bundle?) {
+        lateinit var textView: TextView
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
         recycleView=findViewById(R.id.recycler)
+        textView=findViewById(R.id.text)
 
         list= ArrayList<DataModel>()
         val request: StringRequest = StringRequest(Request.Method.GET,url, Response.Listener {
@@ -32,6 +35,8 @@ class MainActivity2 : AppCompatActivity() {
             for (i in 0 until ja.length()){
                 val jsonobject:JSONObject=ja.getJSONObject(i)
                 val name:String=jsonobject.getString("name")
+                Log.e("name>>",name)
+                textView.text=name
                 val image:String=jsonobject.getString("imageurl")
                 val dataModel=DataModel()
                 dataModel.name = name
@@ -43,7 +48,7 @@ class MainActivity2 : AppCompatActivity() {
             recycleView.layoutManager=layoutManager
             recycleView.adapter=recycle
 
-        }, {
+        },Response.ErrorListener{
 
         })
         val  requestQueue = Volley.newRequestQueue(this)
